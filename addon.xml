@@ -11,7 +11,11 @@
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <language></language>
-    <summary>Listen to podcasts from the ABC Radio National network.</summary>
-    <description>Radio National's vision and purpose is to nurture the intellectual and cultural life of this country, and to be a vital element of the contemporary Australian conversation. Radio National's vision and purpose is to nurture the intellectual and cultural life of this country, and to be a vital element of the contemporary Australian conversation.</description>
+    <summary lang="en">Listen to podcasts from the ABC Radio National network.</summary>
+    <description lang="en">Radio National's vision and purpose is to nurture the intellectual and cultural life of this country, and to be a vital element of the contemporary Australian conversation. Radio National's vision and purpose is to nurture the intellectual and cultural life of this country, and to be a vital element of the contemporary Australian conversation.
+    </description>
+    <license>The MIT License (MIT)</license>
+    <forum>http://forum.xbmc.org/showthread.php?tid=184904</forum>
+    <email>dtoumbourou@gmail.com</email>
   </extension>
 </addon>
