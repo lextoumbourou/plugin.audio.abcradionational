@@ -1,52 +1,84 @@
-from xbmcswift2 import Plugin
-import radionational
+from xbmcswift2 import Plugin, xbmcgui
+from resources.lib import abcradionational
 
 plugin = Plugin()
 
-#title menu
 @plugin.route('/')
-def index():
-    items = [{'label': "Just In", 'path': plugin.url_for('just_in')},
-             {'label': "Programs", 'path': plugin.url_for('programs')},
-             {'label': "Subjects", 'path': plugin.url_for('subjects')}]
+def main_menu():
+    items = [
+        {'label': "Podcasts: Just in", 'path': plugin.url_for('just_in')},
+        {'label': "Podcasts: by Subject", 'path': plugin.url_for('subject_list')},
+        {'label': "Podcasts: by Program", 'path': plugin.url_for('program_menu')},
+    ]
+
     return items
 
-#the 'just in' menu: all playable from here
+
 @plugin.route('/just_in/')
 def just_in():
-    items =[]
-    output = radionational.get_podcasts("http://abc.net.au/radionational/podcasts")
-    for i in output:
-        item = {'label':i['title'],'path':i['url'], 'is_playable': True}
-        items.append(item)
+    subjects = abcradionational.get_podcasts("/podcasts")
+
+    items = [{
+        'label': subject['title'],
+        'path': subject['url'],
+        'is_playable': True,
+    } for subject in subjects]
+
     return items
 
-#the programs menu: non playable
-@plugin.route('/programs/')
-def programs():
-    items = []
-    output = radionational.define_program_url()
-    for i in output:
-        item = {'label':i['title'],'path':i['url']}
-        items.append(item)
+
+@plugin.route('/subject_list/')
+def subject_list():
+    subjects = abcradionational.get_subjects("/podcasts/subjects")
+
+    items = [{
+        'label': subject['title'],
+        'path': plugin.url_for('subject_item', url=subject['url']),
+    } for subject in subjects]
+
+    sorted_items = sorted(items, key=lambda item: item['label'])
+
+    return sorted_items
+
+
+@plugin.route('/subject_item/<url>/')
+def subject_item(url):
+    subjects = abcradionational.podcasts_get(url)
+
+    items = [{
+        'label': subject['title'],
+        'path': subject['url'],
+        'is_playable': True,
+    } for subject in subjects]
+
     return items
 
-#i need to find the <program_id> and link it to the url and just use exsting get_podcast()
-@plugin.route('/programs/<program_id>')
-def open_programs(program_id):
-    items = []
+             
+@plugin.route('/program_menu/')
+def program_menu():
+    subjects = abcradionational.get_programs("/podcasts/program")
+
+    items = [{
+        'label': subject['title'],
+        'path': plugin.url_for('program_item',url=subject['url']),
+    } for subject in subjects]
+
+    sorted_items = sorted(items, key=lambda item: item['label'])
+
+    return sorted_items
 
 
-@plugin.route('/subjects/')
-def subjects():
-    items =[]
-    output = radionational.define_program_url("http://abc.net.au/radionational/subjects")
-    for i in output:
-        item = {'label':i['title'],'path':i['url'], 'is_playable': True}
-        items.append(item)
+@plugin.route('/program_item/<url>/')
+def program_item(url):
+    programs = abcradionational.podcasts_get(url)
+
+    items = [{
+        'label': program['title'],
+        'path': program['url'],
+        'is_playable': True,
+    } for program in programs]
     return items
 
 
 if __name__ == '__main__':
     plugin.run()
-
