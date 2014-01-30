@@ -31,9 +31,13 @@ def podcasts_get(url):
     titles = soup.findAll('h3', 'title')
     output = []
     for i in range(len(titles)):
-		url = urls[i]['href']
-		title = titles[i].text
-		output.append({'url': url, 'title': title})
+        try:
+            url = urls[i]['href']
+            title = titles[i].text
+            output.append({'url': url, 'title': title})
+        except IndexError:
+            pass
+
     return output
 
 
