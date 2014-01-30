@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.audio.abcradionational" name="ABC Radio National" version="0.1" provider-name="Damon Toumbourou">
+<addon id="plugin.audio.abcradionational" name="ABC Radio National" version="0.0.2" provider-name="Damon Toumbourou">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.xbmcswift2" version="2.4.0"/>
@@ -11,7 +11,7 @@
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <language></language>
-    <summary>Summary for "abc_radio_national"</summary>
-    <description>Description for "abc_radio_national"</description>
+    <summary>Listen to podcasts from the ABC Radio National network.</summary>
+    <description>Radio National's vision and purpose is to nurture the intellectual and cultural life of this country, and to be a vital element of the contemporary Australian conversation. Radio National's vision and purpose is to nurture the intellectual and cultural life of this country, and to be a vital element of the contemporary Australian conversation.</description>
   </extension>
 </addon>

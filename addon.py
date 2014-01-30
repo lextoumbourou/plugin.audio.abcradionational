@@ -6,9 +6,9 @@ plugin = Plugin()
 @plugin.route('/')
 def main_menu():
     items = [
-        {'label': "Podcasts: Just in", 'path': plugin.url_for('just_in')},
-        {'label': "Podcasts: by Subject", 'path': plugin.url_for('subject_list')},
-        {'label': "Podcasts: by Program", 'path': plugin.url_for('program_menu')},
+        {'label': plugin.get_string(30000), 'path': plugin.url_for('just_in')},
+        {'label': plugin.get_string(30001), 'path': plugin.url_for('subject_list')},
+        {'label': plugin.get_string(30002), 'path': plugin.url_for('program_menu')},
     ]
 
     return items
