@@ -21,27 +21,7 @@ def get_podcasts(url_id):
         output.append({'url': url, 'title': title})
 
     return output
-
-
-def podcasts_get(url):
-    """
-    Return playable podcasts depending on arg
-    """
-    page = requests.get(url)
-    soup = BeautifulSoup(page.text)
-    urls = soup.findAll('a', 'ico-download')
-    titles = soup.findAll('h3', 'title')
-    output = []
-    for i in range(len(titles)):
-        try:
-            url = urls[i]['href']
-            title = titles[i].text
-            output.append({'url': url, 'title': title})
-        except IndexError:
-            pass
-
-    return output
-
+    
 
 def get_programs(url_id):
     """
@@ -56,8 +36,8 @@ def get_programs(url_id):
         path = urls[i]['href']
         path_final = "http://www.abc.net.au" + path
         title = urls[i].text
-        programs.append({'url': path_final, 'title': title})
-        program_final = programs[40:131]
+    programs.append({'url': path_final, 'title': title})
+    program_final = programs[40:-1]
 
     return program_final
 
@@ -75,7 +55,7 @@ def get_subjects(url_id):
         path = urls[i]['href']
         path_final = "http://www.abc.net.au" + path
         title = urls[i].text
-        programs.append({'url': path_final, 'title': title})
-        programs_final = programs[10:30]
+    programs.append({'url': path_final, 'title': title})
+    programs_final = programs[10:-1]
 
     return programs_final
