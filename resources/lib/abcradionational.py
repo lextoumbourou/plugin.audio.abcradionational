@@ -75,11 +75,3 @@ def get_subjects(url_id):
         sorted_programs = sorted(programs, key=lambda item: item['title'])
         programs_final = programs[10:30]
     return programs_final
-
-
-programs = get_subjects("/podcasts/subjects")
-sorted_programs = sorted(programs, key=lambda item: item['title'])
-
-for program in programs:
-    print program
-
