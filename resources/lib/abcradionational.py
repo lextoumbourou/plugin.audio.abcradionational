@@ -1,6 +1,6 @@
 import requests
-from BeautifulSoup import BeautifulSoup
 import re
+from BeautifulSoup import BeautifulSoup
 
 ABC_URL = "http://abc.net.au/radionational"
 
@@ -17,11 +17,31 @@ def get_podcasts(url_id):
     output = []
     for i in range(len(titles)):
         url = urls[i]['href']
-        title = titles[i].text
+        title = titles[i].text.replace('&#039;', '"')
         output.append({'url': url, 'title': title})
 
     return output
-    
+
+
+def get_podcasts_from_url(url):
+    """
+    Return playable podcasts links from ABC website
+    """
+    page = requests.get(url)
+    soup = BeautifulSoup(page.text)
+    urls = soup.findAll('a', 'ico-download')
+    titles = soup.findAll('h3', 'title')
+    output = []
+    for i in range(len(titles)):
+        try:
+            url = urls[i]['href']
+            title = titles[i].text.replace('&#039;', '"')
+            output.append({'url': url, 'title': title})
+        except IndexError:
+            pass
+
+    return output
+
 
 def get_programs(url_id):
     """
@@ -36,7 +56,8 @@ def get_programs(url_id):
         path = urls[i]['href']
         path_final = "http://www.abc.net.au" + path
         title = urls[i].text
-    programs.append({'url': path_final, 'title': title})
+        programs.append({'url': path_final, 'title': title})
+
     program_final = programs[40:-1]
 
     return program_final
@@ -55,7 +76,8 @@ def get_subjects(url_id):
         path = urls[i]['href']
         path_final = "http://www.abc.net.au" + path
         title = urls[i].text
-    programs.append({'url': path_final, 'title': title})
+        programs.append({'url': path_final, 'title': title})
+
     programs_final = programs[10:-1]
 
     return programs_final

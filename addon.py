@@ -1,14 +1,18 @@
-from xbmcswift2 import Plugin, xbmcgui
+from xbmcswift2 import Plugin
 from resources.lib import abcradionational
 
 plugin = Plugin()
 
+
 @plugin.route('/')
 def main_menu():
     items = [
-        {'label': plugin.get_string(30000), 'path': plugin.url_for('just_in')},
-        {'label': plugin.get_string(30001), 'path': plugin.url_for('subject_list')},
-        {'label': plugin.get_string(30002), 'path': plugin.url_for('program_menu')},
+        {'label': plugin.get_string(30000),
+            'path': plugin.url_for('just_in')},
+        {'label': plugin.get_string(30001),
+            'path': plugin.url_for('subject_list')},
+        {'label': plugin.get_string(30002),
+            'path': plugin.url_for('program_menu')},
     ]
 
     return items
@@ -17,6 +21,7 @@ def main_menu():
 @plugin.route('/just_in/')
 def just_in():
     subjects = abcradionational.get_podcasts("/podcasts")
+    items = []
 
     for subject in subjects:
         items.append({
@@ -31,6 +36,7 @@ def just_in():
 @plugin.route('/subject_list/')
 def subject_list():
     subjects = abcradionational.get_subjects("/podcasts/subjects")
+    items = []
 
     for subject in subjects:
         items.append({
@@ -45,7 +51,8 @@ def subject_list():
 
 @plugin.route('/subject_item/<url>/')
 def subject_item(url):
-    subjects = abcradionational.podcasts_get(url)
+    subjects = abcradionational.get_podcasts_from_url(url)
+    items = []
 
     for subject in subjects:
         items.append({
@@ -56,15 +63,16 @@ def subject_item(url):
 
     return items
 
-             
+
 @plugin.route('/program_menu/')
 def program_menu():
     subjects = abcradionational.get_programs("/podcasts/program")
+    items = []
 
     for subject in subjects:
         items.append({
             'label': subject['title'],
-            'path': plugin.url_for('program_item',url=subject['url']),
+            'path': plugin.url_for('program_item', url=subject['url']),
         })
 
     sorted_items = sorted(items, key=lambda item: item['label'])
@@ -74,7 +82,8 @@ def program_menu():
 
 @plugin.route('/program_item/<url>/')
 def program_item(url):
-    programs = abcradionational.podcasts_get(url)
+    items = []
+    programs = abcradionational.get_podcast_from_url(url)
 
     for program in programs:
         items.append({
@@ -82,7 +91,7 @@ def program_item(url):
             'path': program['url'],
             'is_playable': True,
         })
-        
+
     return items
 
 
