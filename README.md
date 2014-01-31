@@ -1,4 +1,4 @@
-plugin.audio.abcradionational
+ABC Radio National podcast XBMC Plugin
 =============================
 
-XBMC addon for audio podcasts from ABC Radio National 
+Audio podcasts from ABC Radio National Podcast Network on XBMC.
